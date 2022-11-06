@@ -33,9 +33,22 @@ jobs:
             - name: Build image Windows64
               run: |
                 docker build -t testwin64_image:latest -<<EOF
-                FROM mcr.microsoft.com/windows/servercore/iis
-                RUN powershell -NoProfile -Command Remove-Item -Recurse C:\inetpub\wwwroot\*
-                WORKDIR /inetpub/wwwroot
+                #Win11
+                FROM mcr.microsoft.com/windows/servercore/insider:10.0.20348.1
+
+                #input GitHub runner version argument
+                ARG RUNNER_VERSION
+
+                LABEL Author="Velu Demo"
+                LABEL Email="velujay@gmail.com"
+                LABEL GitHub="https://github.com/Singaravelu-web"
+                LABEL BaseImage="servercore/insider:10.0.20348.1"
+                LABEL RunnerVersion=${RUNNER_VERSION}
+
+                SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop';"]
+
+                #Set working directory
+                WORKDIR /actions-runner                
                 RUN touch abc.txt
                 EOF
 
