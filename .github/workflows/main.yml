@@ -35,6 +35,8 @@ jobs:
                 docker build -t testwin64_image:latest -<<EOF
                 #Win11
                 FROM mcr.microsoft.com/windows/servercore/insider:10.0.20348.1
+                cd "C:\Program Files\Docker\Docker"
+                ./DockerCli.exe -SwitchDaemon
 
                 #input GitHub runner version argument
                 ARG RUNNER_VERSION
@@ -49,7 +51,7 @@ jobs:
 
                 #Set working directory
                 WORKDIR /actions-runner                
-                RUN touch abc.txt
+                #RUN touch abc.txt
                 EOF
 
 
