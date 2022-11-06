@@ -25,12 +25,20 @@ jobs:
               run: |
                 docker build ./c# -t aimvector/csharp:1.0.0
 
-            - name: Build image
+            - name: Build image busybox
               run: |
                 docker build -t test_image:latest -<<EOF
                 FROM busybox
                 RUN touch abc.txt
                 EOF
+
+            - name: Build image Windows64
+              run: |
+                docker build -t test_image:latest -<<EOF
+                FROM microsoft/iis:latest
+                RUN touch abc.txt
+                EOF
+
 
             - uses: game-ci/unity-builder@v2
               env:
