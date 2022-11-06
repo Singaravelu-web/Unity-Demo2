@@ -21,9 +21,7 @@ jobs:
                   path: Library
                   key: Library-${{ matrix.targetPlatform }}
                   restore-keys: Library-
-            - name: docker build unity
-              run: |
-                docker build ./c# -t aimvector/csharp:1.0.0
+
 
             - name: Build image busybox
               run: |
@@ -34,8 +32,10 @@ jobs:
 
             - name: Build image Windows64
               run: |
-                docker build -t test_image:latest -<<EOF
-                FROM microsoft/iis:latest
+                docker build -t testwin64_image:latest -<<EOF
+                FROM mcr.microsoft.com/windows/servercore/iis
+                RUN powershell -NoProfile -Command Remove-Item -Recurse C:\inetpub\wwwroot\*
+                WORKDIR /inetpub/wwwroot
                 RUN touch abc.txt
                 EOF
 
