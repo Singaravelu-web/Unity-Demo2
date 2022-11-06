@@ -21,6 +21,10 @@ jobs:
                   path: Library
                   key: Library-${{ matrix.targetPlatform }}
                   restore-keys: Library-
+            - name: docker build unity
+              run: |
+                docker build ./ -t unity/unitydeom:1.0.0
+
             - uses: game-ci/unity-builder@v2
               env:
                   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
