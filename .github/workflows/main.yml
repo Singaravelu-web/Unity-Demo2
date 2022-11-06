@@ -5,7 +5,8 @@ on: [push, pull_request]
 jobs:
     buildForAllSupportedPlatforms:
         name: Build for ${{ matrix.targetPlatform }}
-        runs-on: windows-latest
+        
+        runs-on: [ubuntu-latest, windows-latest]
         strategy:
             fail-fast: false
             matrix:
